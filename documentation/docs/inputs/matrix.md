@@ -36,7 +36,7 @@ Replace `sample01` and `sample02` with the identifiers in your metadata.
 
 ## Matrix input
 
-ScBridge reads the count matrix and its barcode and feature annotations directly, without FastQC
+scHarbor reads the count matrix and its barcode and feature annotations directly, without FastQC
 or STARsolo. Processing begins with cell-level quality control.
 
 | Input file | Contents |
@@ -46,7 +46,7 @@ or STARsolo. Processing begins with cell-level quality control.
 | `features.tsv.gz` | Gene or feature identifiers |
 
 !!! note "Count data"
-    Use unnormalized gene counts. ScBridge applies cell-level QC, doublet detection, and
+    Use unnormalized gene counts. scHarbor applies cell-level QC, doublet detection, and
     filtering to the supplied matrices, including matrices already filtered by the upstream software.
 
 ## Processing flow
