@@ -1,4 +1,4 @@
-name: Publish ScBridge documentation
+name: Publish scHarbor documentation
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: scbridge-pages
+  group: scharbor-pages
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Build
         env:
-          SCBRIDGE_SITE_URL: ${{ steps.pages.outputs.base_url }}/
+          SCHARBOR_SITE_URL: ${{ steps.pages.outputs.base_url }}/
         run: python3 -m mkdocs build -f documentation/mkdocs.yml --site-dir "$GITHUB_WORKSPACE/_site"
 
       - uses: actions/upload-pages-artifact@v4
