@@ -1,19 +1,19 @@
-site_name: ScBridge
+site_name: scHarbor
 use_directory_urls: false
-site_dir: ../../ScBridge_Pages_Preview
+site_dir: ../../scHarbor_Pages_Preview
 plugins:
   - search
 site_description: A containerized Snakemake workflow for modular single-cell RNA-seq analysis.
-site_url: !ENV [SCBRIDGE_SITE_URL, "https://l-m0716.github.io/ScBridge/"]
-repo_url: https://github.com/L-M0716/ScBridge
-repo_name: L-M0716/ScBridge
+site_url: !ENV [SCHARBOR_SITE_URL, "https://l-m0716.github.io/scHarbor/"]
+repo_url: https://github.com/L-M0716/scHarbor
+repo_name: L-M0716/scHarbor
 
 theme:
   name: material
   font: false
   language: en
-  logo: assets/scbridge_logo.png
-  favicon: assets/scbridge_logo.png
+  logo: assets/scHarbor_logo.png
+  favicon: assets/scHarbor_logo.png
   features:
     - navigation.sections
     - navigation.top
@@ -91,4 +91,4 @@ extra_css:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/L-M0716/ScBridge
+      link: https://github.com/L-M0716/scHarbor
