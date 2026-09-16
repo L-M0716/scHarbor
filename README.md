@@ -230,7 +230,7 @@ the current analysis.
 The complete guide covers input preparation, configuration, command-line use,
 pipeline stages, output interpretation, and troubleshooting:
 
-* [Online documentation](https://l-m0716.github.io/ScBridge/)
+* [Online documentation](https://l-m0716.github.io/scHarbor/)
 
 ## Citation
 
