@@ -23,8 +23,8 @@ FILTERED_RDS_MANIFEST=""
 STAR_INDEX=""
 
 # Use the Python environment bundled with Snakemake because it includes PyYAML.
-# SCBRIDGE_PYTHON may be set explicitly for development or non-container use.
-PYTHON_BIN="${SCBRIDGE_PYTHON:-/opt/conda/envs/snakemake/bin/python}"
+# SCHARBOR_PYTHON may be set explicitly for development or non-container use.
+PYTHON_BIN="${SCHARBOR_PYTHON:-/opt/conda/envs/snakemake/bin/python}"
 if [[ ! -x "$PYTHON_BIN" ]]; then
     PYTHON_BIN="$(command -v python3 || true)"
 fi
@@ -121,7 +121,7 @@ check_runtime_python() {
         fail "Python 3 was not found. Expected /opt/conda/envs/snakemake/bin/python or python3 on PATH"
     fi
     if ! "$PYTHON_BIN" -c 'import yaml' >/dev/null 2>&1; then
-        fail "PyYAML is unavailable in $PYTHON_BIN. Rebuild the container or set SCBRIDGE_PYTHON to a Python environment containing PyYAML"
+        fail "PyYAML is unavailable in $PYTHON_BIN. Rebuild the container or set SCHARBOR_PYTHON to a Python environment containing PyYAML"
     fi
 }
 
