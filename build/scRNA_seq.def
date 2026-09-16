@@ -22,9 +22,9 @@ From: ubuntu:22.04
     workflow1/src/config/samples.tsv /opt/scRNA_workflow/workflow1/src/config/samples.tsv
 
     # Version-controlled environment specifications.
-    build/doublet_detect.yaml /opt/scbridge-build/doublet_detect.yaml
+    build/doublet_detect.yaml /opt/scharbor-build/doublet_detect.yaml
 
-    # Small runtime resources that may be redistributed with ScBridge.
+    # Small runtime resources that may be redistributed with scHarbor.
     workflow1/src/config/3M-february-2018_TRU.txt /opt/scRNA_workflow/workflow1/src/config/3M-february-2018_TRU.txt
     workflow1/src/config/BD_CLS1_V1.txt /opt/scRNA_workflow/workflow1/src/config/BD_CLS1_V1.txt
     workflow1/src/config/BD_CLS2_V1.txt /opt/scRNA_workflow/workflow1/src/config/BD_CLS2_V1.txt
@@ -37,8 +37,8 @@ From: ubuntu:22.04
     workflow1/src/config/UCB_markers_from_paper.tsv /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv
 
     # Package the offline KEGG databases used by the default configuration.
-    workflow1/src/config/resources/kegg_cache/hsa_kegg_offline_data.rds /opt/scRNA_workflow/build/resources/kegg_cache/hsa_kegg_offline_data.rds
-    workflow1/src/config/resources/kegg_cache/mmu_kegg_offline_data.rds /opt/scRNA_workflow/build/resources/kegg_cache/mmu_kegg_offline_data.rds
+    build/resources/kegg_cache/hsa_kegg_offline_data.rds /opt/scRNA_workflow/build/resources/kegg_cache/hsa_kegg_offline_data.rds
+    build/resources/kegg_cache/mmu_kegg_offline_data.rds /opt/scRNA_workflow/build/resources/kegg_cache/mmu_kegg_offline_data.rds
 
 %post
     #!/bin/bash
@@ -227,7 +227,7 @@ EOF
     i=1
     while [ $i -le $MAX_RETRIES ]; do
         echo "Attempt $i of $MAX_RETRIES to create doublet_detect environment..."
-        if /opt/conda/bin/conda env create -f /opt/scbridge-build/doublet_detect.yaml; then
+        if /opt/conda/bin/conda env create -f /opt/scharbor-build/doublet_detect.yaml; then
             echo "doublet_detect environment created successfully!"
             break
         else
@@ -428,7 +428,7 @@ EOF
     done
     
     # Remove temporary environment specifications and clean Conda caches
-    rm -rf /opt/scbridge-build
+    rm -rf /opt/scharbor-build
     /opt/conda/bin/conda clean -afy
     
     # ========================================
@@ -490,7 +490,7 @@ EOF
 
     if [ ! -f /opt/scRNA_workflow/run_workflow ]; then
         echo "ERROR: /opt/scRNA_workflow/run_workflow was not found." >&2
-        echo "Bind the ScBridge project to /opt/scRNA_workflow before running the image." >&2
+        echo "Bind the scHarbor project to /opt/scRNA_workflow before running the image." >&2
         exit 1
     fi
 
