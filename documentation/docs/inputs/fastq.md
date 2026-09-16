@@ -1,7 +1,7 @@
 # FASTQ Input
 
 FASTQ mode starts from paired-end sequencing reads, performs read-quality assessment, and generates
-gene-count matrices with STARsolo before entering the shared ScBridge workflow.
+gene-count matrices with STARsolo before entering the shared scHarbor workflow.
 
 ## Input requirements
 
@@ -48,13 +48,13 @@ metadata. The current rule expects the `_1.fastq.gz` and `_2.fastq.gz` suffixes.
 
 ## FastQC
 
-ScBridge runs FastQC on both reads of each run before STARsolo. HTML reports and ZIP archives are
+scHarbor runs FastQC on both reads of each run before STARsolo. HTML reports and ZIP archives are
 written to `RESULTS_DIR/read_data/runs/RUN_ID/`.
 FastQC reports read-quality metrics; this step does not trim reads or replace cell-level quality control.
 
 ## STAR and STARsolo
 
-ScBridge uses STARsolo for single-cell FASTQ alignment and gene-count matrix generation.
+scHarbor uses STARsolo for single-cell FASTQ alignment and gene-count matrix generation.
 STARsolo is integrated into the STAR executable, so no separate STARsolo installation is required.
 
 | Operation | Key STAR/STARsolo option |
@@ -64,7 +64,7 @@ STARsolo is integrated into the STAR executable, so no separate STARsolo install
 | BD v1 processing | `--soloType CB_UMI_Complex` |
 
 !!! note "STARsolo settings"
-    ScBridge supplies these options to `STAR`; they are not standalone commands.
+    scHarbor supplies these options to `STAR`; they are not standalone commands.
     Barcode, UMI, and whitelist settings follow the library configuration. Both library modes use
     `GeneFull` counting and `EmptyDrops_CR` cell calling, as defined in the alignment rule.
 
@@ -112,7 +112,7 @@ The selected target determines where processing stops. See [Pipeline Overview](.
 
 ## Example command
 
-Run from the ScBridge repository root with the SIF image available there. This example uses the
+Run from the scHarbor repository root with the SIF image available there. This example uses the
 same input layout as [Quick Start](../quickstart.md); set the reference paths in
 `config/config.yaml` to match your files.
 
