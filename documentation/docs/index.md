@@ -3,19 +3,19 @@ hide:
   - toc
 ---
 
-<h1 class="scbridge-home-title">ScBridge: modular single-cell RNA-seq analysis</h1>
+<h1 class="scharbor-home-title">scHarbor: modular single-cell RNA-seq analysis</h1>
 
-<div class="scbridge-hero">
-  <img src="assets/scbridge_logo.png" alt="ScBridge logo">
+<div class="scharbor-hero">
+  <img src="assets/scHarbor_logo.png" alt="scHarbor logo">
 </div>
 
-ScBridge connects read processing, cell-type annotation, and downstream analysis in an Apptainer-packaged
+scHarbor connects read processing, cell-type annotation, and downstream analysis in an Apptainer-packaged
 Snakemake workflow. Start with FASTQ, 10x count matrices, or a supported Seurat RDS stage to obtain
 processed objects, annotation evidence, and analysis reports.
 
 ## From input to analysis
 
-<div class="pipeline-diagram" aria-label="ScBridge processing sequence and RDS entry points">
+<div class="pipeline-diagram" aria-label="scHarbor processing sequence and RDS entry points">
   <div class="pipeline-input">
     <span class="pipeline-label">INPUT</span>
     <div><a href="inputs/fastq.html">FASTQ</a><span>FastQC + STARsolo</span><span aria-hidden="true">&rarr;</span><strong>Count matrices</strong></div>
