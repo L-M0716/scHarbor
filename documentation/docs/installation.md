@@ -3,7 +3,7 @@
 # Installation
 
 !!! info "Installation overview"
-    ScBridge is distributed as an Apptainer container. 
+    scHarbor is distributed as an Apptainer container. 
     Setup involves obtaining the workflow, building the container image, and verifying that the container runs successfully.
    
 
@@ -11,8 +11,8 @@
 
 | Requirement | Notes |
 |---|---|
-| Apptainer | Required on a compatible execution host to run the ScBridge SIF image |
-| ScBridge repository | Provides the launcher, workflow rules, configuration, and build definition |
+| Apptainer | Required on a compatible execution host to run the scHarbor SIF image |
+| scHarbor repository | Provides the launcher, workflow rules, configuration, and build definition |
 | Disk space | Allow space for input data, references, intermediate objects, and results |
 
 R, Python, Snakemake, STAR (including STARsolo), and analysis packages are supplied through the
@@ -32,11 +32,11 @@ A container image does not replacethe host container runtime.
 
 ## 2. Get the workflow
 
-Download the ScBridge source code and enter the repository directory:
+Download the scHarbor source code and enter the repository directory:
 
 ```bash
-git clone https://github.com/L-M0716/ScBridge.git
-cd ScBridge
+git clone https://github.com/L-M0716/scHarbor.git
+cd scHarbor
 ```
 
 ## 3. Build the image
