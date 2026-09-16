@@ -30,7 +30,7 @@ This stage establishes which cells and genes enter the shared analysis. Retentio
 
 ### Doublet detection
 
-ScBridge runs scDblFinder separately for each sample. The expected doublet rate and random seed
+scHarbor runs scDblFinder separately for each sample. The expected doublet rate and random seed
 are controlled by `qc.expected_doublet_rate` and `normalization.seed`, with default values of
 `0.06` (6%) and `42`, respectively. The expected rate is a model input, not a fixed proportion of
 cells that will be removed.
