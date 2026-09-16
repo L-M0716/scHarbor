@@ -14,7 +14,7 @@
 
 Prepare only the inputs for your chosen mode. These layouts are examples, not required directory names.
 Use paths matching your files in the command-line arguments and configuration.
-The examples below assume that the input directories and a `config/` directory are in the ScBridge
+The examples below assume that the input directories and a `config/` directory are in the scHarbor
 repository root, alongside `run_workflow` and `scRNA_seq.sif`.
 
 === "FASTQ"
@@ -67,7 +67,7 @@ repository root, alongside `run_workflow` and `scRNA_seq.sif`.
 
 ## Preview the workflow
 
-- **Preview:** `-n` performs a dry run without executing the analysis. ScBridge may still generate runtime configuration and standardization files during setup.
+- **Preview:** `-n` performs a dry run without executing the analysis. scHarbor may still generate runtime configuration and standardization files during setup.
 - **Run location:** Execute the command from the repository root. `$PWD` mounts this directory at `/opt/scRNA_workflow` inside the container.
 - **Target:** All examples stop after annotation. The RDS example starts from filtering outputs; each mode uses a separate results directory.
 - **Paths:** Adjust the examples to your files and use container-accessible paths for all workflow arguments.
