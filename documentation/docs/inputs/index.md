@@ -1,6 +1,6 @@
 # Input Data Overview
 
-ScBridge supports three entry modes so analyses can begin from raw reads, existing count matrices,
+scHarbor supports three entry modes so analyses can begin from raw reads, existing count matrices,
 or intermediate Seurat objects.
 
 | Mode | Starting material | Typical use |
@@ -14,7 +14,7 @@ for all three modes.
 
 ## Human and mouse datasets
 
-ScBridge supports human and mouse datasets. The `organism` setting in `config.yaml` (`human` or
+scHarbor supports human and mouse datasets. The `organism` setting in `config.yaml` (`human` or
 `mouse`) determines the species-specific resources used by annotation, enrichment, and CellChat.
 These resources are selected by the workflow; no separate database selection is required.
 
@@ -47,7 +47,7 @@ when they already match the dataset; these are not additional selections require
 
 ## Marker tables
 
-ScBridge accepts the standard columns `species`, `main_cell_type`, `sub_cell_type`, and `marker_gene`.
+scHarbor accepts the standard columns `species`, `main_cell_type`, `sub_cell_type`, and `marker_gene`.
 It also recognizes `official gene symbol` and `cell type`, mapping them to `marker_gene` and
 `main_cell_type`, respectively.
 
