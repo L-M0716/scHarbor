@@ -1,0 +1,78 @@
+[
+  {
+    "sample": "GSM9101188",
+    "original_cells": 11734,
+    "qc_passing_cells": 11277,
+    "selected_cells": 250,
+    "selected_nnz": 502013,
+    "selected_by_lineage": {
+      "T_cells": 63,
+      "B_cells": 63,
+      "NK_cells": 62,
+      "Monocytes": 62
+    },
+    "available_by_lineage": {
+      "T_cells": 2228,
+      "B_cells": 1418,
+      "NK_cells": 2173,
+      "Monocytes": 5456
+    }
+  },
+  {
+    "sample": "GSM9101189",
+    "original_cells": 24644,
+    "qc_passing_cells": 23810,
+    "selected_cells": 250,
+    "selected_nnz": 398818,
+    "selected_by_lineage": {
+      "T_cells": 63,
+      "B_cells": 63,
+      "NK_cells": 62,
+      "Monocytes": 62
+    },
+    "available_by_lineage": {
+      "T_cells": 11458,
+      "B_cells": 3312,
+      "NK_cells": 4441,
+      "Monocytes": 4526
+    }
+  },
+  {
+    "sample": "GSM9101191",
+    "original_cells": 23086,
+    "qc_passing_cells": 12901,
+    "selected_cells": 250,
+    "selected_nnz": 172144,
+    "selected_by_lineage": {
+      "T_cells": 63,
+      "B_cells": 63,
+      "NK_cells": 62,
+      "Monocytes": 62
+    },
+    "available_by_lineage": {
+      "T_cells": 5397,
+      "B_cells": 4348,
+      "NK_cells": 708,
+      "Monocytes": 2289
+    }
+  },
+  {
+    "sample": "GSM9101192",
+    "original_cells": 22387,
+    "qc_passing_cells": 20619,
+    "selected_cells": 250,
+    "selected_nnz": 510847,
+    "selected_by_lineage": {
+      "T_cells": 63,
+      "B_cells": 63,
+      "NK_cells": 62,
+      "Monocytes": 62
+    },
+    "available_by_lineage": {
+      "T_cells": 9634,
+      "B_cells": 3500,
+      "NK_cells": 1202,
+      "Monocytes": 5828
+    }
+  }
+]
