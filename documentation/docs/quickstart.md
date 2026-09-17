@@ -10,6 +10,38 @@
 | `matrix` | Starting from existing 10x-style count matrices | `-D MATRIX_DIR` |
 | `rds` | Continuing from supported Seurat objects | `-G STAGE -P PATH` |
 
+## Run the bundled demo
+
+The scHarbor image contains everything needed for a compact end-to-end validation run:
+
+- four 10x-style matrix samples: two adult peripheral blood and two umbilical cord blood;
+- 250 quality-controlled cells per sample, for 1,000 cells in total;
+- approximately balanced T-cell, B-cell, NK-cell, and monocyte representation;
+- matching `samples.demo.tsv`, default configuration, and annotation marker table.
+
+Create a writable host output directory and mount only that directory into the container:
+
+```bash
+mkdir -p demo_results
+
+apptainer exec \
+  -B "$PWD/demo_results":/results \
+  scRNA_seq.sif \
+  bash /opt/scRNA_workflow/run_workflow \
+    -I matrix \
+    -D /opt/scRNA_workflow/workflow1/src/config/matrix_files \
+    -C /opt/scRNA_workflow/workflow1/src/config/config.yaml \
+    -S /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv \
+    -M /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv \
+    -R /results \
+    -t all
+```
+
+To inspect the planned jobs without running the analysis, append `-n`. The demo is
+designed to verify execution, outputs, and dependencies. Its reduced and deliberately
+balanced composition is not suitable for biological interpretation, performance
+benchmarking, or reproduction of published cell frequencies.
+
 ## Prepare the input files
 
 Prepare only the inputs for your chosen mode. These layouts are examples, not required directory names.
