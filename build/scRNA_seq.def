@@ -1,86 +1,120 @@
-Bootstrap: docker
-From: ubuntu:22.04
-%labels
-    Author zyh
-    Version 1.1
-    Description scRNA-seq Analysis Workflow Container
-    SnakemakeVersion 9.11.2
-    STARVersion 2.7.11b
-%help
-    This is a scRNA-seq analysis workflow container based on Snakemake.
-%files
-    # Build from the repository root so these source paths resolve correctly.
-    run_workflow /opt/scRNA_workflow/run_workflow
-    workflow1/src/snakefile /opt/scRNA_workflow/workflow1/src/snakefile
-    workflow1/src/workflow/rules /opt/scRNA_workflow/workflow1/src/workflow/rules
-    workflow1/src/workflow/scripts /opt/scRNA_workflow/workflow1/src/workflow/scripts
-    workflow1/src/config/config.yaml /opt/scRNA_workflow/workflow1/src/config/config.yaml
-    # Bundle the example metadata; supply dataset-specific metadata with -S.
-    workflow1/src/config/samples.tsv /opt/scRNA_workflow/workflow1/src/config/samples.tsv
-    workflow1/src/config/samples.demo.tsv /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv
-    # Compact four-sample matrix dataset for fast end-to-end validation.
-    workflow1/src/config/matrix_files /opt/scRNA_workflow/workflow1/src/config/matrix_files
-    # Version-controlled environment specifications.
-    build/doublet_detect.yaml /opt/scharbor-build/doublet_detect.yaml
-    # Small runtime resources that may be redistributed with scHarbor.
-    workflow1/src/config/3M-february-2018_TRU.txt /opt/scRNA_workflow/workflow1/src/config/3M-february-2018_TRU.txt
-    workflow1/src/config/BD_CLS1_V1.txt /opt/scRNA_workflow/workflow1/src/config/BD_CLS1_V1.txt
-    workflow1/src/config/BD_CLS2_V1.txt /opt/scRNA_workflow/workflow1/src/config/BD_CLS2_V1.txt
-    workflow1/src/config/BD_CLS3_V1.txt /opt/scRNA_workflow/workflow1/src/config/BD_CLS3_V1.txt
-    workflow1/src/config/corrected_mouse_cell_cycle_genes.rds /opt/scRNA_workflow/build/resources/corrected_mouse_cell_cycle_genes.rds
-    workflow1/src/config/human_cell_cycle_genes_2019.rds /opt/scRNA_workflow/build/resources/human_cell_cycle_genes_2019.rds
-    # Default marker knowledge base used for hierarchical annotation. Users can
-    # override this at runtime with -M/--markerlist.
-    workflow1/src/config/UCB_markers_from_paper.tsv /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv
-    # Package the offline KEGG databases used by the default configuration.
-    build/resources/kegg_cache/hsa_kegg_offline_data.rds /opt/scRNA_workflow/build/resources/kegg_cache/hsa_kegg_offline_data.rds
-    build/resources/kegg_cache/mmu_kegg_offline_data.rds /opt/scRNA_workflow/build/resources/kegg_cache/mmu_kegg_offline_data.rds
-%post
+    echo "  - Monocle3"
+    echo "  - CellChat"
+    echo "========================================"
+%environment
+    export LC_ALL=C
+    export LANG=C.UTF-8
+    export PATH=/opt/conda/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+    export SNAKEMAKE_CONDA_PREFIX=/opt/conda/envs
+%runscript
     #!/bin/bash
-    set -e
+    set -euo pipefail
+    if [ ! -f /opt/scRNA_workflow/run_workflow ]; then
+        echo "ERROR: /opt/scRNA_workflow/run_workflow was not found." >&2
+        echo "Bind the scHarbor project to /opt/scRNA_workflow before running the image." >&2
+        exit 1
+    fi
+    exec bash /opt/scRNA_workflow/run_workflow "$@"
+%test
+    echo "=========================================="
+    echo "Testing container components..."
+    echo "=========================================="
     
-    export DEBIAN_FRONTEND=noninteractive
+    # Set PATH for the container tests
     export PATH=/opt/conda/bin:$PATH
     
-    # ========================================
-    # Configure network timeouts and retries
-    # ========================================
-    export WGET_OPTS="--timeout=300 --tries=5 --retry-connrefused --waitretry=10 --continue"
-    export CURL_OPTS="--connect-timeout 300 --max-time 1800 --retry 5 --retry-delay 10"
+    # Initialize Conda and activate the base environment
+    eval "$(/opt/conda/bin/conda shell.bash hook)"
+    conda activate base
     
-    export PIP_TIMEOUT=300
-    export PIP_RETRIES=5
-    export PIP_DEFAULT_TIMEOUT=300
+    echo "Testing Snakemake..."
+    if command -v snakemake > /dev/null 2>&1; then
+        snakemake --version
+        echo "✓ Snakemake is installed"
+    else
+        echo "✗ Snakemake is missing"
+        exit 1
+    fi
     
-    # Create the pip configuration file
-    mkdir -p /root/.pip
-    cat > /root/.pip/pip.conf << 'EOF'
-[global]
-timeout = 300
-retries = 5
-index-url = https://pypi.org/simple
-trusted-host = pypi.org
-EOF
+    echo ""
+    echo "Testing STAR..."
+    if [ -x /usr/local/bin/STAR ]; then
+        /usr/local/bin/STAR --version
+        echo "✓ STAR is installed and executable"
+    else
+        echo "✗ STAR is missing or not executable"
+        exit 1
+    fi
     
-    # ========================================
-    # Install system dependencies
-    # ========================================
-    echo "Installing system dependencies..."
-    RETRY_COUNT=0
-    MAX_RETRY=5
-    while [ $RETRY_COUNT -lt $MAX_RETRY ]; do
-        if apt-get update && apt-get install -y \
-            wget curl git build-essential \
-            zlib1g-dev libbz2-dev libnlopt-dev liblzma-dev \
-            libcurl4-openssl-dev libssl-dev libncurses5-dev \
-            libxml2-dev libcairo2-dev libxt-dev \
-            libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
-            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
-            libzip-dev libgit2-dev libhdf5-dev \
-            libgsl-dev libglpk-dev \
-            ghostscript pigz unzip ca-certificates \
-            fastqc; then
-            rm -rf /var/lib/apt/lists/*
-            break
-        else
-            RETRY_COUNT=$((RETRY_COUNT + 1))
+    echo ""
+    echo "Testing Conda environments..."
+    conda env list
+    
+    echo ""
+    echo "Testing FastQC..."
+    if command -v fastqc > /dev/null 2>&1; then
+        fastqc --version
+        echo "✓ FastQC is installed"
+    else
+        echo "✗ FastQC is missing"
+        exit 1
+    fi
+    
+    echo ""
+    echo "Testing Monocle3 in doublet_detect environment..."
+    if /opt/conda/bin/conda run -n doublet_detect R -e "library(monocle3); cat('✓ Monocle3 version:', as.character(packageVersion('monocle3')), '\n')" 2>/dev/null; then
+        echo "✓ Monocle3 is installed in doublet_detect environment"
+    else
+        echo "✗ Monocle3 is missing from doublet_detect environment"
+        exit 1
+    fi
+    
+    echo ""
+    echo "Testing CellChat in doublet_detect environment..."
+    if /opt/conda/bin/conda run -n doublet_detect R -e "
+        library(CellChat)
+        cat('✓ CellChat version:', as.character(packageVersion('CellChat')), '\n')
+        db <- CellChatDB.mouse
+        cat('✓ CellChatDB.mouse contains', nrow(db\$interaction), 'interactions\n')
+    " 2>/dev/null; then
+        echo "✓ CellChat is installed in doublet_detect environment"
+    else
+        echo "✗ CellChat is missing from doublet_detect environment"
+        exit 1
+    fi
+    
+    echo ""
+    echo "Testing directory structure..."
+    
+    test -x /opt/scRNA_workflow/run_workflow && echo "✓ Workflow entry point found" || exit 1
+    test -f /opt/scRNA_workflow/workflow1/src/snakefile && echo "✓ Snakefile found" || exit 1
+    test -d /opt/scRNA_workflow/workflow1/src/workflow/rules && echo "✓ Rules directory found" || exit 1
+    test -d /opt/scRNA_workflow/workflow1/src/workflow/scripts && echo "✓ Scripts directory found" || exit 1
+    test -f /opt/scRNA_workflow/workflow1/src/config/config.yaml && echo "✓ Config file found" || exit 1
+    test -s /opt/scRNA_workflow/workflow1/src/config/samples.tsv && echo "Example sample metadata found" || exit 1
+    test -s /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv && echo "Demo sample metadata found" || exit 1
+    test "$(awk 'NR > 1 { count++ } END { print count + 0 }' /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv)" -eq 4 || exit 1
+    for sample in GSM9101188 GSM9101189 GSM9101191 GSM9101192; do
+        demo_dir="/opt/scRNA_workflow/workflow1/src/config/matrix_files/${sample}/filtered_feature_bc_matrix"
+        test -s "${demo_dir}/matrix.mtx.gz" || exit 1
+        test -s "${demo_dir}/barcodes.tsv.gz" || exit 1
+        test -s "${demo_dir}/features.tsv.gz" || exit 1
+    done
+    echo "✓ Four-sample demo matrix dataset found"
+    test -f /opt/scRNA_workflow/workflow1/src/config/3M-february-2018_TRU.txt && echo "✓ 10x whitelist found" || exit 1
+    test -f /opt/scRNA_workflow/build/resources/corrected_mouse_cell_cycle_genes.rds && echo "✓ Mouse cell-cycle genes found" || exit 1
+    test -f /opt/scRNA_workflow/build/resources/human_cell_cycle_genes_2019.rds && echo "✓ Human cell-cycle genes found" || exit 1
+    test -f /opt/scRNA_workflow/workflow1/src/config/UCB_markers_from_paper.tsv && echo "✓ Human demo marker table found" || exit 1
+    test -d /opt/scRNA_workflow/workflow1/src/config/fastqs && echo "✓ FASTQ mount point created" || exit 1
+    test -d /opt/scRNA_workflow/dist/results && echo "✓ Results mount point created" || echo "✗ Results mount point missing"
+    
+    test -L /miniconda3/envs && echo "✓ miniconda3/envs link created" || echo "✗ miniconda3/envs link missing"
+    test -d /opt/conda/envs/doublet_detect && echo "✓ doublet_detect environment exists" || exit 1
+    test -d /opt/conda/envs/sctest/conda-meta && echo "Legacy sctest prefix is available" || exit 1
+    
+    echo ""
+    echo "=========================================="
+    test -s /opt/scRNA_workflow/build/resources/kegg_cache/hsa_kegg_offline_data.rds || exit 1
+    test -s /opt/scRNA_workflow/build/resources/kegg_cache/mmu_kegg_offline_data.rds || exit 1
+    echo "All tests completed!"
+    echo "=========================================="
