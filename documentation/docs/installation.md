@@ -28,7 +28,7 @@ apptainer --version
 If the command is unavailable, install Apptainer following its
 [official installation guide](https://apptainer.org/docs/admin/latest/installation.html),
 or use the runtime provided by your computing facility. 
-A container image does not replacethe host container runtime.
+A container image does not replace the host container runtime.
 
 ## 2. Get the workflow
 
@@ -71,7 +71,34 @@ Run these commands from the repository root. `$PWD` is the host repository direc
 `/opt/scRNA_workflow` inside the container. Workflow arguments must refer to paths accessible inside
 the container. These checks verify startup and executable availability; they do not run an analysis.
 
-## 5. Installation troubleshooting
+## 5. Verify the workflow with bundled data
+
+The image includes a compact four-sample matrix dataset and its matching metadata,
+configuration, and marker table. Run the bundled test to verify the complete workflow:
+
+```bash
+mkdir -p demo_results
+
+apptainer exec \
+  -B "$PWD/demo_results":/results \
+  scRNA_seq.sif \
+  bash /opt/scRNA_workflow/run_workflow \
+    -I matrix \
+    -D /opt/scRNA_workflow/workflow1/src/config/matrix_files \
+    -C /opt/scRNA_workflow/workflow1/src/config/config.yaml \
+    -S /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv \
+    -M /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv \
+    -R /results \
+    -t all
+```
+
+Successful completion verifies container startup, workflow dependencies, matrix input,
+preprocessing, hierarchical annotation, and downstream modules. The bundled subset is
+for software validation only and is not suitable for biological interpretation.
+
+See [Quick Start](quickstart.md#run-the-bundled-demo) for dataset details and a dry-run command.
+
+## 6. Installation troubleshooting
 
 | Symptom | What to check |
 |---|---|
