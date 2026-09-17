@@ -72,13 +72,13 @@ run_workflow -I fastq|matrix|rds [mode-specific input] \
   -C CONFIG -S METADATA -M MARKERS -R RESULTS [-t TASK]
 ```
 
-### Run the Bundled Demo
+### Bundled end-to-end test
 
-The container includes a small demo dataset for quickly verifying that the workflow runs correctly, without requiring any external input data.
-
-The bundled dataset contains a four-sample gene expression matrix with matching metadata, configuration files, and a marker table. It includes 1,000 cells sampled from T cells, B cells, NK cells, and monocytes across two adult peripheral blood and two umbilical cord blood samples.
-
-To run the demo:
+The image contains a compact four-sample matrix dataset and its matching
+metadata, configuration, and marker table. It contains 1,000 cells selected
+across T cells, B cells, NK cells, and monocytes, with two adult peripheral
+blood and two umbilical cord blood samples. Use it to verify a new image
+without preparing external input data:
 
 ```bash
 mkdir -p demo_results
@@ -91,18 +91,15 @@ apptainer exec \
     -D /opt/scRNA_workflow/workflow1/src/config/matrix_files \
     -C /opt/scRNA_workflow/workflow1/src/config/config.yaml \
     -S /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv \
-    -M /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv \
+    -M /opt/scRNA_workflow/workflow1/src/config/UCB_markers_from_paper.tsv \
     -R /results \
     -t all
 ```
 
-The results will be written to `demo_results/`.
-
-> **Note**
-> The bundled dataset is intended solely for validating the software installation and workflow execution. It should **not** be used for biological interpretation, performance evaluation, or benchmarking.
-
-For additional details, see the [Quick Start guide](https://l-m0716.github.io/scHarbor/quickstart.html#run-the-bundled-demo).
-
+The bundled subset is for software validation only and must not be used for
+biological interpretation or benchmarking. See the
+[Quick Start guide](https://l-m0716.github.io/scHarbor/quickstart.html#run-the-bundled-demo)
+for details.
 
 ### FASTQ Input
 
