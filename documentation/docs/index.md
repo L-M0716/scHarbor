@@ -59,6 +59,12 @@ New users can begin with [Installation](installation.md) and [Quick Start](quick
 For an existing run, use [Configuration](reference/configuration.md),
 [Workflow Targets](reference/targets.md), or [Troubleshooting](reference/troubleshooting.md).
 
+!!! tip "Verify scHarbor with bundled data"
+    The container includes a compact four-sample matrix dataset, matching metadata,
+    configuration, and annotation markers. After building the image, run the
+    [bundled end-to-end test](quickstart.md#run-the-bundled-demo) without downloading
+    external input data.
+
 ## From broad labels to cell subtypes
 
 SingleR reference labels are summarized at cluster level, then matched to eligible marker lineages.
