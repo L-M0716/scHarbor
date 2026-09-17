@@ -2,6 +2,12 @@
 
 Matrix mode accepts 10x-style count matrices for cell-level quality control and subsequent analysis.
 
+!!! tip "Bundled matrix demo"
+    The container includes four compact matrix samples and matching metadata for a
+    complete software validation run. No external matrix input is required. See
+    [Run the bundled demo](../quickstart.md#run-the-bundled-demo) for the command,
+    dataset composition, and interpretation limits.
+
 ## Input requirements
 
 - **Input mode:** `-I matrix`.
