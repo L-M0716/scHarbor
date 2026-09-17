@@ -32,7 +32,7 @@ apptainer exec \
     -D /opt/scRNA_workflow/workflow1/src/config/matrix_files \
     -C /opt/scRNA_workflow/workflow1/src/config/config.yaml \
     -S /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv \
-    -M /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv \
+    -M /opt/scRNA_workflow/workflow1/src/config/UCB_markers_from_paper.tsv \
     -R /results \
     -t all
 ```
