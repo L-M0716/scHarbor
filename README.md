@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="scHarbor_logo.png" alt="ScBridge - Bridging single-cell data to insights" width="750">
+  <img src="scHarbor_logo.png" alt="scHarbor - Navigating single-cell data to discovery" width="750">
 </p>
 
 <p align="center">
@@ -71,6 +71,38 @@ The general command is:
 run_workflow -I fastq|matrix|rds [mode-specific input] \
   -C CONFIG -S METADATA -M MARKERS -R RESULTS [-t TASK]
 ```
+
+### Run the Bundled Demo
+
+The container includes a small demo dataset for quickly verifying that the workflow runs correctly, without requiring any external input data.
+
+The bundled dataset contains a four-sample gene expression matrix with matching metadata, configuration files, and a marker table. It includes 1,000 cells sampled from T cells, B cells, NK cells, and monocytes across two adult peripheral blood and two umbilical cord blood samples.
+
+To run the demo:
+
+```bash
+mkdir -p demo_results
+
+apptainer exec \
+  -B "$PWD/demo_results":/results \
+  scRNA_seq.sif \
+  bash /opt/scRNA_workflow/run_workflow \
+    -I matrix \
+    -D /opt/scRNA_workflow/workflow1/src/config/matrix_files \
+    -C /opt/scRNA_workflow/workflow1/src/config/config.yaml \
+    -S /opt/scRNA_workflow/workflow1/src/config/samples.demo.tsv \
+    -M /opt/scRNA_workflow/build/resources/ImmGen/markerlist.tsv \
+    -R /results \
+    -t all
+```
+
+The results will be written to `demo_results/`.
+
+> **Note**
+> The bundled dataset is intended solely for validating the software installation and workflow execution. It should **not** be used for biological interpretation, performance evaluation, or benchmarking.
+
+For additional details, see the [Quick Start guide](https://l-m0716.github.io/scHarbor/quickstart.html#run-the-bundled-demo).
+
 
 ### FASTQ Input
 
