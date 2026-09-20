@@ -42,6 +42,12 @@ designed to verify execution, outputs, and dependencies. Its reduced and deliber
 balanced composition is not suitable for biological interpretation, performance
 benchmarking, or reproduction of published cell frequencies.
 
+!!! info "Observed runtime"
+    A complete `-t all` run finished in approximately 10 minutes in the authors'
+    Linux server environment. This is an indicative functional-test runtime, not a
+    performance benchmark. Wall-clock time varies with CPU availability, memory,
+    storage performance, and container startup overhead.
+
 ## Prepare the input files
 
 Prepare only the inputs for your chosen mode. These layouts are examples, not required directory names.
