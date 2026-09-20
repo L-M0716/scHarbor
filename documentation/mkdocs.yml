@@ -3,7 +3,7 @@ use_directory_urls: false
 site_dir: ../../scHarbor_Pages_Preview
 plugins:
   - search
-site_description: A containerized Snakemake workflow for modular single-cell RNA-seq analysis.
+site_description: A reproducible, containerized Snakemake workflow for hierarchical cell-type annotation and comprehensive single-cell RNA-seq analysis.
 site_url: !ENV [SCHARBOR_SITE_URL, "https://l-m0716.github.io/scHarbor/"]
 repo_url: https://github.com/L-M0716/scHarbor
 repo_name: L-M0716/scHarbor
