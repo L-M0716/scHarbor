@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>A modular, containerized Snakemake workflow for end-to-end single-cell RNA-seq analysis.</strong>
+  <strong>A reproducible, containerized Snakemake workflow for hierarchical cell-type annotation and comprehensive single-cell RNA-seq analysis.</strong>
 </p>
 
 scHarbor supports FASTQ, 10x matrix, and Seurat RDS inputs, combining
@@ -97,7 +97,10 @@ apptainer exec \
 ```
 
 The bundled subset is for software validation only and must not be used for
-biological interpretation or benchmarking. See the
+biological interpretation or benchmarking. A complete `-t all` run finished
+in approximately 10 minutes in the authors' Linux server environment; actual
+runtime depends on available CPU, memory, storage performance, and container
+startup overhead. See the
 [Quick Start guide](https://l-m0716.github.io/scHarbor/quickstart.html#run-the-bundled-demo)
 for details.
 
